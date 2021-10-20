@@ -27,7 +27,7 @@ const App = () => {
   console.log(`The books array in our state:`, books);
   return (
     <>
-      <BooksContainer />
+      <BooksContainer books={books} />
     </>
   );
 };
