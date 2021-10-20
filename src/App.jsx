@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BooksContainer from "./components/BooksContainer";
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -24,6 +25,10 @@ const App = () => {
   }, []);
 
   console.log(`The books array in our state:`, books);
-  return <div>Hello there</div>;
+  return (
+    <>
+      <BooksContainer />
+    </>
+  );
 };
 export default App;
