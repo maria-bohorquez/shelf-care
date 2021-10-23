@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BooksContainer from "./components/BooksContainer";
+import { GlobalStyle } from "./styles";
+import Header from "./components/Header";
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -27,6 +29,8 @@ const App = () => {
   console.log(`The books array in our state:`, books);
   return (
     <>
+      <GlobalStyle />
+      <Header />
       <BooksContainer books={books} />
     </>
   );

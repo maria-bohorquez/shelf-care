@@ -1,3 +1,4 @@
+import { identity } from "lodash";
 import styled from "styled-components";
 
 export const Container = styled.figure`
@@ -24,4 +25,5 @@ export const Author = styled.h4`
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
+  font-family: "Inconsolata", monospace;
 `;
