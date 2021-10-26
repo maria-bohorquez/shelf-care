@@ -2,9 +2,9 @@ import React from "react";
 import { Container, H2, BookList } from "./styles";
 import Book from "../Book";
 
-function BooksContainer({ books, pickBook }) {
+function BooksContainer({ books, pickBook, isPanelOpen }) {
   return (
-    <Container>
+    <Container $isPanelOpen={isPanelOpen}>
       <H2>All books</H2>
       <BookList>
         {books.map((book) => (
