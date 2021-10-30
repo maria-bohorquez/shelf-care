@@ -3,10 +3,12 @@ import BooksContainer from "./components/BooksContainer";
 import { GlobalStyle } from "./styles";
 import Header from "./components/Header";
 import DetailPanel from "./components/DetailPanel";
+import { Transition } from "react-transition-group";
 
 const App = () => {
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showPanel, setShowPanel] = useState(false);
 
   console.log("This message will render every time the component renders.");
 
@@ -30,10 +32,11 @@ const App = () => {
 
   const pickBook = (book) => {
     setSelectedBook(book);
+    setShowPanel(true);
   };
 
   const closePanel = () => {
-    setSelectedBook(null);
+    setShowPanel(false);
   };
 
   console.log(`The books array in our state:`, books);
@@ -44,11 +47,18 @@ const App = () => {
       <BooksContainer
         books={books}
         pickBook={pickBook}
-        isPanelOpen={selectedBook !== null}
+        isPanelOpen={showPanel}
       />
-      {selectedBook && (
-        <DetailPanel book={selectedBook} closePanel={closePanel} />
-      )}
+
+      <Transition in={showPanel} timeout={300}>
+        {(state) => (
+          <DetailPanel
+            book={selectedBook}
+            closePanel={closePanel}
+            state={state}
+          />
+        )}
+      </Transition>
     </>
   );
 };
