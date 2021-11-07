@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import BooksContainer from "./components/BooksContainer";
 import { GlobalStyle } from "./styles";
 import Header from "./components/Header";
+import Search from "./components/Search";
 import DetailPanel from "./components/DetailPanel";
 import { Transition } from "react-transition-group";
 
@@ -9,8 +10,7 @@ const App = () => {
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showPanel, setShowPanel] = useState(false);
-
-  console.log("This message will render every time the component renders.");
+  const [filteredBooks, setFilteredBooks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,8 +21,8 @@ const App = () => {
         console.log(`Here's what our fetch request returns`, response);
 
         const books = await response.json();
-        console.log(`Our json-ified response :`, books);
         setBooks(books);
+        setFilteredBooks(books);
       } catch (errors) {
         console.log(errors);
       }
@@ -39,15 +39,36 @@ const App = () => {
     setShowPanel(false);
   };
 
-  console.log(`The books array in our state:`, books);
+  const filterBooks = (searchTerm) => {
+    const stringSearch = (bookAttribute, searchTerm) =>
+      bookAttribute.toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (!searchTerm) {
+      setFilteredBooks(books);
+    } else {
+      setFilteredBooks(
+        books.filter(
+          (book) =>
+            stringSearch(book.title, searchTerm) ||
+            stringSearch(book.author, searchTerm)
+        )
+      );
+    }
+  };
+
+  const hasFiltered = filteredBooks.length !== books.length;
+
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <Header>
+        <Search filterBooks={filterBooks} />
+      </Header>
       <BooksContainer
-        books={books}
+        books={filteredBooks}
         pickBook={pickBook}
         isPanelOpen={showPanel}
+        title={hasFiltered ? "Search results :" : "All books"}
       />
 
       <Transition in={showPanel} timeout={300}>
