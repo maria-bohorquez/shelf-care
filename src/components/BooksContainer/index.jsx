@@ -3,7 +3,7 @@ import { debounce } from "lodash-es";
 import { Container, H2, BookList } from "./styles";
 import Book from "../Book";
 
-function BooksContainer({ books, pickBook, isPanelOpen }) {
+function BooksContainer({ books, pickBook, isPanelOpen, title }) {
   const [scroll, setScroll] = useState(0);
   const prevPanelState = useRef(false);
 
@@ -29,10 +29,9 @@ function BooksContainer({ books, pickBook, isPanelOpen }) {
     prevPanelState.current = isPanelOpen;
   }, [isPanelOpen, prevPanelState, scroll]);
 
-  console.log(scroll);
   return (
     <Container $isPanelOpen={isPanelOpen} $top={scroll}>
-      <H2>All books</H2>
+      <H2>{title}</H2>
       <BookList>
         {books.map((book) => (
           <Book key={book.id} book={book} pickBook={pickBook} />
