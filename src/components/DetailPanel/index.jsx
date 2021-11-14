@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Panel, P, Em, CloseWrapper, BG } from "./styles";
 import { Close } from "../../styles";
 import Book from "../Book";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect } from "react";
 
 const DetailPanel = ({ book, closePanel, state }) => {
   const panelEl = useRef(null);
